@@ -391,6 +391,12 @@ class BotService {
         if (msg.includes("no wahala")) {
             return "No wahala, we dey alright!";
         }
+        if (msg.includes("lol")) {
+            return "Whats funny Kate";
+        }
+        if (msg.includes("ur sure are crazy")) {
+            return "You too mama";
+        }
         return "Sorry, I didn't understand that. Can you ask again?";
     }
 }
