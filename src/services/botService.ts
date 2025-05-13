@@ -68,6 +68,9 @@ class BotService {
         if (msg.includes('how are you')) {
             return "I'm just a bot, but I'm doing great! How about you?";
         }
+        if (msg.includes('who made you') || msg.includes('who created you') || msg.includes('who is your creator') || msg.includes('who is your boss')) {
+            return "I was created by WolfieWTF!";
+        }
         if (msg.includes('tell me a joke')) {
             const jokes = [
                 "Why did the computer show up at work late? It had a hard drive!",
