@@ -1,6 +1,25 @@
-class BotService {
-    getResponse(message: string): string {
+import OpenAI from "openai";class BotService {
+    private openai: OpenAI;
+
+    constructor() {
+this.openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});    }
+
+    async getResponse(message: string): Promise<string> {
         const msg = message.toLowerCase();
+
+        if (msg.startsWith("ask gpt")) {
+            const prompt = message.replace(/^ask gpt/i, "").trim();
+const completion = await this.openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: prompt }],
+});
+return completion.choices[0].message?.content?.trim() || "Sorry, I couldn't get a response.";        }
+    //getResponse(message: string): string {
+        // Normalize the message to lowercase for easier matching
+        // and remove any leading/trailing whitespace
+        //const msg = message.toLowerCase();
         if (msg.includes('hello') || msg.includes('hi')) {
             return "Hello! How can I help you today?";
         }

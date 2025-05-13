@@ -125,7 +125,13 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
             </style>
         </head>
         <body>
+            <div id="loader-screen" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:#343541;display:flex;align-items:center;justify-content:center;z-index:1000;">
+                <div style="color:#fff;font-size:2rem;">Loading...</div>
+            </div>
             <div id="container">
+            <div style="text-align:center;">
+                <img src="https://files.catbox.moe/gw4etg.jpeg" style="height:48px;margin-bottom:8px;">
+            </div>
                 <h2>WolfieWTF Chatbot</h2>
                 <div id="chat"></div>
                 <div id="input-area">
@@ -186,6 +192,9 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
             chat.scrollTop = chat.scrollHeight;
         }
     }
+        window.onload = function() {
+    document.getElementById('loader-screen').style.display = 'none';
+};
 </script>
         </body>
         </html>
