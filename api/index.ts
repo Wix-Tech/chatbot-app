@@ -43,6 +43,13 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
                     flex-direction: column;
                     gap: 12px;
                 }
+                #chat {
+                    min-height: 200px;
+                    max-height: 70vh;
+                }
+                #container {
+                    height: 100dvh;
+                }
                 .bubble {
                     max-width: 90vw;
                     padding: 12px 18px;
@@ -132,10 +139,23 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
             <script>
                 function send() {
                     const msgInput = document.getElementById('msg');
+                    const sendBtn = document.querySelector('button');
+                    const chat = document.getElementById('chat');
                     const msg = msgInput.value;
                     if (!msg.trim()) return;
-                    appendMessage('user', msg);
+                    appendMessage('user', msg, false);
                     msgInput.value = '';
+                    msgInput.disabled = true;
+                    sendBtn.disabled = true;
+
+                    // Show loading indicator
+                    const loadingDiv = document.createElement('div');
+                    loadingDiv.className = 'bubble bot';
+                    loadingDiv.id = 'loading';
+                    loadingDiv.innerText = 'WolfieWTF is typing...';
+                    chat.appendChild(loadingDiv);
+                    chat.scrollTop = chat.scrollHeight;
+
                     fetch('/api', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -143,16 +163,26 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
                     })
                     .then(res => res.json())
                     .then(data => {
-                        appendMessage('bot', data.response);
+                        // Remove loading indicator
+                        const loading = document.getElementById('loading');
+                        if (loading) loading.remove();
+                        appendMessage('bot', data.response, true);
+                    })
+                    .finally(() => {
+                        msgInput.disabled = false;
+                        sendBtn.disabled = false;
+                        msgInput.focus();
                     });
                 }
-                function appendMessage(sender, text) {
+                function appendMessage(sender, text, scroll = false) {
                     const chat = document.getElementById('chat');
                     const div = document.createElement('div');
                     div.className = 'bubble ' + sender;
                     div.innerHTML = (sender === 'user' ? '<b>You:</b> ' : '<b>WolfieWTF:</b> ') + text;
                     chat.appendChild(div);
-                    chat.scrollTop = chat.scrollHeight;
+                    if (scroll) {
+                        chat.scrollTop = chat.scrollHeight;
+                    }
                 }
             </script>
         </body>
