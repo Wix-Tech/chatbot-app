@@ -41,6 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                     padding: 16px;
                     background: #444654;
                     display: flex;
+                    height: 100%;
                     flex-direction: column;
                     gap: 12px;
                 }
@@ -131,9 +132,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </div>
             <div id="container">
                 <div style="text-align:center;">
+                    <!-- Title image/banner -->
                     <img src="https://files.catbox.moe/gw4etg.jpeg" 
-                        style="height:48px;width:48px;margin-bottom:4px;border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 2px 8px #2223;" 
-                        alt="WolfieWTF Logo">
+                         alt="Chatbot Banner" 
+                         style="width:100%;max-width:320px;margin-bottom:10px;border-radius:12px;box-shadow:0 2px 8px #2223;">
+                    <!-- Logo and title -->
+                    <img src="https://files.catbox.moe/gw4etg.jpeg" 
+                         style="height:48px;width:48px;margin-bottom:4px;border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 2px 8px #2223;" 
+                         alt="WolfieWTF Logo">
                     <h2 style="display:inline-block;vertical-align:middle;margin-left:10px;margin-bottom:0;">WolfieWTF Chatbot</h2>
                 </div>
                 <div id="chat"></div>
