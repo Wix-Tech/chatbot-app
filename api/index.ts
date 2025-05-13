@@ -2,13 +2,14 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import ChatController from '../src/controllers/chatController';
 const chatController = new ChatController();
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'POST') {
         const userMessage = req.body.message;
         if (!userMessage) {
             return res.status(400).json({ error: 'Message is required' });
         }
-        const response = chatController.handleUserMessage(userMessage, true);
+        // Await the response here:
+        const response = await chatController.handleUserMessage(userMessage, true);
         return res.json({ response });
     }
 
@@ -193,9 +194,10 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         }
     }
         window.onload = function() {
-    document.getElementById('loader-screen').style.display = 'none';
-};
-</script>
+            setTimeout(() => {
+                document.getElementById('loader-screen').style.display = 'none';
+            }, 2000); // 2-second delay
+};</script>
         </body>
         </html>
         `);

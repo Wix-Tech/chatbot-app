@@ -7,10 +7,10 @@ class ChatController {
         this.botService = new BotService();
     }
 
-    handleUserMessage(message: string, returnResponse = false) {
-        const response = this.botService.getResponse(message);
+    async handleUserMessage(message: string, returnResponse = false) {
+        const response = await this.botService.getResponse(message);
         if (returnResponse) {
-            return response;
+            return typeof response === "string" ? response : JSON.stringify(response);
         }
         console.log(`WolfieWTF: ${response}`);
     }
