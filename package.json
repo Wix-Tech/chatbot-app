@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "express": "^4.17.1",
     "jest": "^27.0.6",
     "openai": "^4.98.0",

@@ -1,17 +1,21 @@
 import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 class BotService {
     private openai: OpenAI;
+    private gemini: GoogleGenerativeAI;
 
     constructor() {
         this.openai = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY,
         });
+        this.gemini = new GoogleGenerativeAI(process.env.GEMINI_KEY || "AIzaSyCUPaxfIdZawsKZKqCqJcC-GWiQPCXKTDc");
     }
 
     async getResponse(message: string): Promise<string> {
         const msg = message.toLowerCase();
 
+        // GPT command
         if (msg.startsWith("ask gpt")) {
             const prompt = message.replace(/^ask gpt/i, "").trim();
             try {
@@ -26,6 +30,20 @@ class BotService {
                 }
                 console.error("OpenAI error:", err);
                 return "Sorry, there was an error contacting OpenAI.";
+            }
+        }
+
+        // Gemini command
+        if (msg.startsWith("ask gemini")) {
+            const prompt = message.replace(/^ask gemini/i, "").trim();
+            try {
+                const model = this.gemini.getGenerativeModel({ model: "gemini-pro" });
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                return response.text() || "Sorry, Gemini couldn't get a response.";
+            } catch (err) {
+                console.error("Gemini error:", err);
+                return "Sorry, there was an error contacting Gemini.";
             }
         } 
        //getResponse(message: string): string {
