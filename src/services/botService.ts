@@ -37,7 +37,7 @@ class BotService {
         if (msg.startsWith("ask gemini")) {
             const prompt = message.replace(/^ask gemini/i, "").trim();
             try {
-                const model = this.gemini.getGenerativeModel({ model: "gemini-pro" });
+                const model = this.gemini.getGenerativeModel({ model: "gemini-2.0-flash" });
                 const result = await model.generateContent(prompt);
                 const response = await result.response;
                 return response.text() || "Sorry, Gemini couldn't get a response.";
