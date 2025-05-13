@@ -171,7 +171,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
                     .finally(() => {
                         msgInput.disabled = false;
                         sendBtn.disabled = false;
-                        msgInput.focus();
+                        
                     });
                 }
                 function appendMessage(sender, text, scroll = false) {
