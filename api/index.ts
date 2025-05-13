@@ -132,11 +132,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </div>
             <div id="container">
                 <div style="text-align:center;">
-                    <!-- Title image/banner -->
+                    <!-- Title image/banner at the top -->
                     <img src="https://files.catbox.moe/gw4etg.jpeg" 
                          alt="Chatbot Banner" 
                          style="width:100%;max-width:320px;margin-bottom:10px;border-radius:12px;box-shadow:0 2px 8px #2223;">
-                    <!-- Logo and title -->
+                    <!-- Logo and title below the banner -->
                     <img src="https://files.catbox.moe/gw4etg.jpeg" 
                          style="height:48px;width:48px;margin-bottom:4px;border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 2px 8px #2223;" 
                          alt="WolfieWTF Logo">
