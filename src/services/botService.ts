@@ -445,12 +445,58 @@ class BotService {
         if (msg.includes("no wahala")) {
             return "No wahala, we dey alright!";
         }
-        if (msg.includes("lol")) {
-            return "Whats funny Kate";
+        if (msg.includes("lol")) {             
+            return "Whats funny 😂";
         }
-        if (msg.includes("u sure are crazy")) {
-            return "You too mama";
+        if (msg.includes("lmao")) {
+            return "Whats funny 😅";
         }
+        if (msg.includes("rofl")) {
+            return "Whats funny 😆";
+        }
+        if (msg.includes("omg")) {
+            return "I know right! It's crazy!";
+        }
+        if (msg.includes("omgosh")) {
+            return "I know right! It's crazy!";
+        }
+        if (msg.includes("Okay... So tell me why do women like money?")) {
+            return "Because they are Gold Diggers!";
+        }
+        if (msg.includes("you be werey")) {
+            return "No be me be werey, na you be werey!";
+        }
+        if (msg.includes("you be mumu")) {
+            return "No be me be mumu, na you be mumu!";
+        }
+        if (msg.includes("you be fool")) {
+            return "No be me be fool, na you be fool!";
+        }
+        if (msg.includes("you be idiot")) {
+            return "No be me be idiot, na you be idiot!";
+        }
+        if (msg.includes("you dey mad")) {
+            return "No be me dey mad, na you dey mad! nonsence";
+        }
+        if (msg.includes("you dey craze")) {
+            return "No be me dey craze, na you dey craze!";
+        }
+        if (msg.includes("you dey vex")) {
+            return "Why i go vex? I no dey vex!";
+        }
+        if (msg.includes("you dey laugh")) {
+            return "Why i go laugh? I no dey laugh!";
+        }
+        if (msg.includes("you go cry")) {
+            return "Dey play";
+        }
+        if (msg.includes("you go die")) {
+            return "No be me go die, na you go die!";
+        }
+        if (msg.includes("i dey vex")) {
+            return "Why you dey vex? No let wahala spoil your day!";
+        }
+         
         if (msg.includes('trivia')) {
             const trivia = [
                 "Did you know? The Eiffel Tower can be 15 cm taller during the summer due to thermal expansion.",
