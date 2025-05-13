@@ -481,6 +481,9 @@ class BotService {
         if (msg.includes("you dey craze")) {
             return "No be me dey craze, na you dey craze!";
         }
+        if (msg.includes("Oooooh your so smart unlike ur maker")) {
+            return "I know right! My maker no sabi anything! Dey play my maker smart you!";
+        }
         if (msg.includes("you dey vex")) {
             return "Why i go vex? I no dey vex!";
         }
