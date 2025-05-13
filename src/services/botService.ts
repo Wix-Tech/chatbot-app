@@ -34,18 +34,18 @@ class BotService {
         }
 
         // Gemini command
-        if (msg.startsWith("ask gemini")) {
-            const prompt = message.replace(/^ask gemini/i, "").trim();
-            try {
-                const model = this.gemini.getGenerativeModel({ model: "gemini-2.0-flash" });
-                const result = await model.generateContent(prompt);
-                const response = await result.response;
-                return response.text() || "Sorry, Gemini couldn't get a response.";
-            } catch (err) {
-                console.error("Gemini error:", err);
-                return "Sorry, there was an error contacting Gemini.";
-            }
-        } 
+        //if (msg.startsWith("ask gemini")) {
+            //const prompt = message.replace(/^ask gemini/i, "").trim();
+            //try {
+                //const model = this.gemini.getGenerativeModel({ model: "gemini-2.0-flash" });
+                //const result = await model.generateContent(prompt);
+                //const response = await result.response;
+                //return response.text() || "Sorry, Gemini couldn't get a response.";
+            //} catch (err) {
+                //console.error("Gemini error:", err);
+                //return "Sorry, there was an error contacting Gemini.";
+            //}
+        //} 
        //getResponse(message: string): string {
         // Normalize the message to lowercase for easier matching
         // and remove any leading/trailing whitespace
@@ -500,7 +500,18 @@ class BotService {
             return jokes[Math.floor(Math.random() * jokes.length)];
         }
         
-        return "Sorry, I didn't understand that. Can you ask again?";
+        // ...all your hardcoded responses above...
+
+            // Gemini fallback for any unmatched message
+            try {
+                const model = this.gemini.getGenerativeModel({ model: "gemini-2.0-flash" });
+                const result = await model.generateContent(message);
+                const response = await result.response;
+                return response.text() || "Sorry, Gemini couldn't get a response.";
+            } catch (err) {
+                console.error("Gemini error:", err);
+                return "Sorry, there was an error contacting Gemini.";
+            }
     }
 }
 
