@@ -13,7 +13,9 @@ class BotService {
     }
 
     async getResponse(message: string): Promise<string> {
+        console.log("USER PROMPT:", message);
         const msg = message.toLowerCase();
+        // ...rest of your code...
 
         // GPT command
         if (msg.startsWith("ask gpt")) {
