@@ -460,7 +460,7 @@ class BotService {
         if (msg.includes("omgosh")) {
             return "I know right! It's crazy!";
         }
-        if (msg.includes("Okay... So tell me why do women like money?")) {
+        if (msg.includes("Okay So tell me why do women like money?")) {
             return "Because they are Gold Diggers!";
         }
         if (msg.includes("you be werey")) {
@@ -481,7 +481,7 @@ class BotService {
         if (msg.includes("you dey craze")) {
             return "No be me dey craze, na you dey craze!";
         }
-        if (msg.includes("Oooooh your so smart unlike ur maker")) {
+        if (msg.includes("your so smart unlike ur maker")) {
             return "I know right! My maker no sabi anything! Dey play my maker smart you!";
         }
         if (msg.includes("you dey vex")) {
