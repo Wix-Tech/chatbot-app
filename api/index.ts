@@ -1,25 +1,20 @@
-import express, { Request, Response } from 'express';
-import ChatController from './controllers/chatController';
-
-const app = express();
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import ChatController from '../src/controllers/chatController';
 const chatController = new ChatController();
 
-app.use(express.json());
-
-app.post('/chat', (req: Request, res: Response) => {
-    const userMessage = req.body.message;
-    if (!userMessage) {
-        return res.status(400).json({ error: 'Message is required' });
+export default function handler(req: VercelRequest, res: VercelResponse) {
+    if (req.method === 'POST' && req.url?.endsWith('/chat')) {
+        const userMessage = req.body.message;
+        if (!userMessage) {
+            return res.status(400).json({ error: 'Message is required' });
+        }
+        const response = chatController.handleUserMessage(userMessage, true);
+        return res.json({ response });
     }
-    // Get bot response
-    const response = chatController.handleUserMessage(userMessage, true);
-    res.json({ response });
-});
 
-// ...existing code...
-
-app.get('/', (_req: Request, res: Response) => {
-    res.send(`
+    // Serve the HTML UI for GET /
+    if (req.method === 'GET') {
+        return res.send(`
         <html>
         <head>
             <title>Wolfie Chatbot</title>
@@ -141,7 +136,7 @@ app.get('/', (_req: Request, res: Response) => {
                     if (!msg.trim()) return;
                     appendMessage('user', msg);
                     msgInput.value = '';
-                    fetch('/chat', {
+                    fetch('/api', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ message: msg })
@@ -162,10 +157,8 @@ app.get('/', (_req: Request, res: Response) => {
             </script>
         </body>
         </html>
-    `);
-});
-// ...existing code...
+        `);
+    }
 
-app.listen(3000, () => {
-    console.log('Chatbot web server running at http://localhost:3000');
-});
+    res.status(404).send('Not found');
+}
