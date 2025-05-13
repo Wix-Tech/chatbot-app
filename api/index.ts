@@ -137,54 +137,59 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
                 </div>
             </div>
             <script>
-                function send() {
-                    const msgInput = document.getElementById('msg');
-                    const sendBtn = document.querySelector('button');
-                    const chat = document.getElementById('chat');
-                    const msg = msgInput.value;
-                    if (!msg.trim()) return;
-                    appendMessage('user', msg, false);
-                    msgInput.value = '';
-                    msgInput.disabled = true;
-                    sendBtn.disabled = true;
+    function send() {
+        const msgInput = document.getElementById('msg');
+        const sendBtn = document.querySelector('button');
+        const chat = document.getElementById('chat');
+        const msg = msgInput.value;
+        if (!msg.trim()) return;
+        appendMessage('user', msg, false);
+        msgInput.value = '';
+        msgInput.disabled = true;
+        sendBtn.disabled = true;
 
-                    // Show loading indicator
-                    const loadingDiv = document.createElement('div');
-                    loadingDiv.className = 'bubble bot';
-                    loadingDiv.id = 'loading';
-                    loadingDiv.innerText = 'WolfieWTF is typing...';
-                    chat.appendChild(loadingDiv);
-                    chat.scrollTop = chat.scrollHeight;
+        // Show loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'bubble bot';
+        loadingDiv.id = 'loading';
+        loadingDiv.innerText = 'WolfieWTF is typing...';
+        chat.appendChild(loadingDiv);
+        chat.scrollTop = chat.scrollHeight;
 
-                    fetch('/api', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: msg })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        // Remove loading indicator
-                        const loading = document.getElementById('loading');
-                        if (loading) loading.remove();
-                        appendMessage('bot', data.response, true);
-                    })
-                    .finally(() => {
-                        msgInput.disabled = false;
-                        sendBtn.disabled = false;
-                        
-                    });
-                }
-                function appendMessage(sender, text, scroll = false) {
-                    const chat = document.getElementById('chat');
-                    const div = document.createElement('div');
-                    div.className = 'bubble ' + sender;
-                    div.innerHTML = (sender === 'user' ? '<b>You:</b> ' : '<b>WolfieWTF:</b> ') + text;
-                    chat.appendChild(div);
-                    if (scroll) {
-                        chat.scrollTop = chat.scrollHeight;
-                    }
-                }
-            </script>
+        fetch('/api', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Add a 30-second delay for the bot's response
+            setTimeout(() => {
+                // Remove loading indicator
+                const loading = document.getElementById('loading');
+                if (loading) loading.remove();
+
+                // Append the bot's response
+                appendMessage('bot', data.response, true);
+
+                // Re-enable input and send button after response
+                msgInput.disabled = false;
+                sendBtn.disabled = false;
+            }, 30000); // 30-second delay
+        });
+    }
+
+    function appendMessage(sender, text, scroll = false) {
+        const chat = document.getElementById('chat');
+        const div = document.createElement('div');
+        div.className = 'bubble ' + sender;
+        div.innerHTML = (sender === 'user' ? '<b>You:</b> ' : '<b>WolfieWTF:</b> ') + text;
+        chat.appendChild(div);
+        if (scroll) {
+            chat.scrollTop = chat.scrollHeight;
+        }
+    }
+</script>
         </body>
         </html>
         `);
