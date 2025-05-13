@@ -5,7 +5,6 @@
   "main": "src/bot.ts",
   "scripts": {
     "start": "ts-node src/bot.ts",
-    "build": "tsc",
     "test": "jest"
   },
   "dependencies": {
