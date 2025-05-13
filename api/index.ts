@@ -136,6 +136,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                         alt="WolfieWTF Logo">
                     <h2 style="display:inline-block;vertical-align:middle;margin-left:10px;margin-bottom:0;">WolfieWTF Chatbot</h2>
                 </div>
+                <div id="chat"></div>
                 <div id="input-area">
                     <input id="msg" placeholder="Type a message..." onkeydown="if(event.key==='Enter')send()" autocomplete="off" />
                     <button onclick="send()">Send</button>
