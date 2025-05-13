@@ -394,7 +394,7 @@ class BotService {
         if (msg.includes("lol")) {
             return "Whats funny Kate";
         }
-        if (msg.includes("ur sure are crazy")) {
+        if (msg.includes("u sure are crazy")) {
             return "You too mama";
         }
         return "Sorry, I didn't understand that. Can you ask again?";
