@@ -397,6 +397,60 @@ class BotService {
         if (msg.includes("u sure are crazy")) {
             return "You too mama";
         }
+        if (msg.includes('trivia')) {
+            const trivia = [
+                "Did you know? The Eiffel Tower can be 15 cm taller during the summer due to thermal expansion.",
+                "Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3000 years old and still edible.",
+                "Did you know? The shortest war in history was between Britain and Zanzibar on August 27, 1896. Zanzibar surrendered after 38 minutes.",
+                "Did you know? Octopuses have three hearts!"
+            ];
+            return trivia[Math.floor(Math.random() * trivia.length)];
+        }
+
+        // Motivational Quotes
+        if (msg.includes('motivate me') || msg.includes('motivation')) {
+            const quotes = [
+                "The best way to get started is to quit talking and begin doing. - Walt Disney",
+                "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty. - Winston Churchill",
+                "Don’t let yesterday take up too much of today. - Will Rogers",
+                "You learn more from failure than from success. Don’t let it stop you. Failure builds character."
+            ];
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        // Math Calculations
+        if (msg.startsWith('calculate')) {
+            try {
+                const expression = msg.replace('calculate', '').trim();
+                // Simple eval-based calculation (use with caution for more complex apps)
+                const result = eval(expression);
+                return `The result of ${expression} is ${result}`;
+            } catch {
+                return "Sorry, I couldn't calculate that. Please check your expression and try again.";
+            }
+        }
+
+        // Fun Facts
+        if (msg.includes('fun fact')) {
+            const funFacts = [
+                "Bananas are berries, but strawberries aren't!",
+                "A day on Venus is longer than a year on Venus.",
+                "Wombat poop is cube-shaped!",
+                "Sharks existed before trees!"
+            ];
+            return funFacts[Math.floor(Math.random() * funFacts.length)];
+        }
+
+        // Random Joke
+        if (msg.includes('funny') || msg.includes('joke')) {
+            const jokes = [
+                "Why don’t skeletons fight each other? They don’t have the guts.",
+                "What do you call fake spaghetti? An impasta!",
+                "Why don’t scientists trust atoms? Because they make up everything!"
+            ];
+            return jokes[Math.floor(Math.random() * jokes.length)];
+        }
+        
         return "Sorry, I didn't understand that. Can you ask again?";
     }
 }
