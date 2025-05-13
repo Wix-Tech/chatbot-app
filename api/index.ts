@@ -47,9 +47,6 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
                     min-height: 200px;
                     max-height: 70vh;
                 }
-                #container {
-                    height: 100dvh;
-                }
                 .bubble {
                     max-width: 90vw;
                     padding: 12px 18px;
