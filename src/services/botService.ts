@@ -355,6 +355,12 @@ class BotService {
         if (msg.includes("wetin dey happen") || msg.includes("wetin dey") || msg.includes("any gist")) {
             return "Nothing much, just dey chill!";
         }
+        if (msg.includes("i dey hungry") || msg.includes("i dey chop")) {
+            return "Wetin you wan chop? Make I recommend suya!";
+        }
+        if (msg.includes("i dey tire") || msg.includes("i dey weak") || msg.includes("i dey tired")) {
+            return "No worry, better dey come!";
+        }
         if (msg.includes("i dey hungry") || msg.includes("i hungry") || msg.includes("i wan chop")) {
             return "Abeg try find better food chop, no starve!";
         }
@@ -460,7 +466,7 @@ class BotService {
         if (msg.includes("omgosh")) {
             return "I know right! It's crazy!";
         }
-        if (msg.includes("Okay So tell me why do women like money?")) {
+        if (msg.includes("okay So tell me why do women like money?")) {
             return "Because they are Gold Diggers!";
         }
         if (msg.includes("you be werey")) {
