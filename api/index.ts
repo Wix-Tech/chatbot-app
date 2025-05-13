@@ -130,11 +130,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 <div style="color:#fff;font-size:2rem;">Loading...</div>
             </div>
             <div id="container">
-            <div style="text-align:center;">
-                <img src="https://files.catbox.moe/gw4etg.jpeg" style="height:48px;margin-bottom:8px;">
-            </div>
-                <h2>WolfieWTF Chatbot</h2>
-                <div id="chat"></div>
+                <div style="text-align:center;">
+                    <img src="https://files.catbox.moe/gw4etg.jpeg" 
+                        style="height:48px;width:48px;margin-bottom:4px;border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 2px 8px #2223;" 
+                        alt="WolfieWTF Logo">
+                    <h2 style="display:inline-block;vertical-align:middle;margin-left:10px;margin-bottom:0;">WolfieWTF Chatbot</h2>
+                </div>
                 <div id="input-area">
                     <input id="msg" placeholder="Type a message..." onkeydown="if(event.key==='Enter')send()" autocomplete="off" />
                     <button onclick="send()">Send</button>

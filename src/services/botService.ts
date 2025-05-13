@@ -1,27 +1,34 @@
-import OpenAI from "openai";class BotService {
+import OpenAI from "openai";
+
+class BotService {
     private openai: OpenAI;
 
     constructor() {
-this.openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});    }
+        this.openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+    }
 
     async getResponse(message: string): Promise<string> {
-    const msg = message.toLowerCase();
+        const msg = message.toLowerCase();
 
-    if (msg.startsWith("ask gpt")) {
-        const prompt = message.replace(/^ask gpt/i, "").trim();
-        try {
-            const completion = await this.openai.chat.completions.create({
-                model: "gpt-3.5-turbo",
-                messages: [{ role: "user", content: prompt }],
-            });
-            return completion.choices[0].message?.content?.trim() || "Sorry, I couldn't get a response.";
-        } catch (err) {
-            console.error("OpenAI error:", err);
-            return "Sorry, there was an error contacting OpenAI.";
-        }
-    }    //getResponse(message: string): string {
+        if (msg.startsWith("ask gpt")) {
+            const prompt = message.replace(/^ask gpt/i, "").trim();
+            try {
+                const completion = await this.openai.chat.completions.create({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: prompt }],
+                });
+                return completion.choices[0].message?.content?.trim() || "Sorry, I couldn't get a response.";
+            } catch (err) {
+                if ((err as any)?.code === 'insufficient_quota' || (err as any)?.status === 429) {
+                    return "Sorry, my AI brain is out of quota. Please try again later!";
+                }
+                console.error("OpenAI error:", err);
+                return "Sorry, there was an error contacting OpenAI.";
+            }
+        } 
+       //getResponse(message: string): string {
         // Normalize the message to lowercase for easier matching
         // and remove any leading/trailing whitespace
         //const msg = message.toLowerCase();
