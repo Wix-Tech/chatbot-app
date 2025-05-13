@@ -3,7 +3,7 @@ import ChatController from '../src/controllers/chatController';
 const chatController = new ChatController();
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
-    if (req.method === 'POST' && req.url?.endsWith('/chat')) {
+    if (req.method === 'POST') {
         const userMessage = req.body.message;
         if (!userMessage) {
             return res.status(400).json({ error: 'Message is required' });
