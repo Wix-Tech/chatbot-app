@@ -466,7 +466,7 @@ class BotService {
         if (msg.includes("omgosh")) {
             return "I know right! It's crazy!";
         }
-        if (msg.includes("okay So tell me why do women like money?")) {
+        if (msg.includes("okay so tell me why do women like money?")) {
             return "Because they are Gold Diggers!";
         }
         if (msg.includes("you be werey")) {
