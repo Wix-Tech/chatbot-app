@@ -175,7 +175,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
                 // Re-enable input and send button after response
                 msgInput.disabled = false;
                 sendBtn.disabled = false;
-            }, 30000); // 30-second delay
+            }, 3000); // 30-second delay
         });
     }
 
