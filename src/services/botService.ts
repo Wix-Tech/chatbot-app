@@ -560,6 +560,28 @@ class BotService {
             return jokes[Math.floor(Math.random() * jokes.length)];
         }
         
+        if (msg.startsWith('tic tac toe')) {
+            return [
+                "Let's play Tic Tac Toe! You are X, I am O.",
+                "Send your move as a position (1-9):",
+                "1 | 2 | 3",
+                "---------",
+                "4 | 5 | 6",
+                "---------",
+                "7 | 8 | 9"
+            ].join('\n');
+        }
+
+        if (msg.startsWith('move')) {
+            const userMove = parseInt(msg.replace('move', '').trim(), 10);
+            if (isNaN(userMove) || userMove < 1 || userMove > 9) {
+                return "Invalid move! Please enter a number from 1 to 9.";
+            }
+            // For demo: just echo the move and pretend the bot moves next
+            const botMove = [1,2,3,4,5,6,7,8,9].filter(n => n !== userMove)[Math.floor(Math.random()*8)];
+            return `You played at position ${userMove}. I play at position ${botMove}. (No board tracking in this demo!)`;
+        }
+
         // ...all your hardcoded responses above...
 
             // Gemini fallback for any unmatched message
