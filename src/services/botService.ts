@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 class BotService {
     private openai: OpenAI;
     private gemini: GoogleGenerativeAI;
+    private tttGames: Map<string, { board: string[], active: boolean }> = new Map();
 
     constructor() {
         this.openai = new OpenAI({
@@ -12,7 +13,21 @@ class BotService {
         this.gemini = new GoogleGenerativeAI(process.env.GEMINI_KEY || "AIzaSyCUPaxfIdZawsKZKqCqJcC-GWiQPCXKTDc");
     }
 
-    async getResponse(message: string): Promise<string> {
+    private renderBoard(board: string[]) {
+        const b = board.map((v, i) => v || (i + 1)).map(String);
+        return `${b[0]} | ${b[1]} | ${b[2]}\n---------\n${b[3]} | ${b[4]} | ${b[5]}\n---------\n${b[6]} | ${b[7]} | ${b[8]}`;
+    }
+
+    private checkWin(board: string[], player: "X" | "O") {
+        const wins = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+        ];
+        return wins.some(line => line.every(i => board[i] === player));
+    }
+
+    async getResponse(message: string, userId: string): Promise<string> {
         console.log("USER PROMPT:", message);
         const msg = message.toLowerCase();
         // ...rest of your code...
@@ -560,26 +575,51 @@ class BotService {
             return jokes[Math.floor(Math.random() * jokes.length)];
         }
         
+        // Start a new game
         if (msg.startsWith('tic tac toe')) {
+            this.tttGames.set(userId, { board: Array(9).fill(""), active: true });
             return [
                 "Let's play Tic Tac Toe! You are X, I am O.",
                 "Send your move as a position (1-9):",
-                "1 | 2 | 3",
-                "---------",
-                "4 | 5 | 6",
-                "---------",
-                "7 | 8 | 9"
+                this.renderBoard(Array(9).fill(""))
             ].join('\n');
         }
 
+        // Handle a move
         if (msg.startsWith('move')) {
-            const userMove = parseInt(msg.replace('move', '').trim(), 10);
-            if (isNaN(userMove) || userMove < 1 || userMove > 9) {
+            const game = this.tttGames.get(userId);
+            if (!game || !game.active) {
+                return "Start a new game by typing 'tic tac toe'.";
+            }
+            const userMove = parseInt(msg.replace('move', '').trim(), 10) - 1;
+            if (isNaN(userMove) || userMove < 0 || userMove > 8) {
                 return "Invalid move! Please enter a number from 1 to 9.";
             }
-            // For demo: just echo the move and pretend the bot moves next
-            const botMove = [1,2,3,4,5,6,7,8,9].filter(n => n !== userMove)[Math.floor(Math.random()*8)];
-            return `You played at position ${userMove}. I play at position ${botMove}. (No board tracking in this demo!)`;
+            if (game.board[userMove]) {
+                return "That spot is already taken! Try another.";
+            }
+            game.board[userMove] = "X";
+            if (this.checkWin(game.board, "X")) {
+                game.active = false;
+                return `You win!\n${this.renderBoard(game.board)}`;
+            }
+            if (game.board.every(cell => cell)) {
+                game.active = false;
+                return `It's a draw!\n${this.renderBoard(game.board)}`;
+            }
+            // Bot move
+            const available = game.board.map((v, i) => v ? null : i).filter(i => i !== null) as number[];
+            const botMove = available[Math.floor(Math.random() * available.length)];
+            game.board[botMove] = "O";
+            if (this.checkWin(game.board, "O")) {
+                game.active = false;
+                return `I win!\n${this.renderBoard(game.board)}`;
+            }
+            if (game.board.every(cell => cell)) {
+                game.active = false;
+                return `It's a draw!\n${this.renderBoard(game.board)}`;
+            }
+            return `You played at position ${userMove + 1}. I play at position ${botMove + 1}.\n${this.renderBoard(game.board)}`;
         }
 
         // ...all your hardcoded responses above...

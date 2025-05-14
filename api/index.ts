@@ -4,12 +4,12 @@ const chatController = new ChatController();
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'POST') {
-        const userMessage = req.body.message;
-        if (!userMessage) {
+        const { message, userId } = req.body;
+        if (!message) {
             return res.status(400).json({ error: 'Message is required' });
         }
         // Await the response here:
-        const response = await chatController.handleUserMessage(userMessage, true);
+        const response = await chatController.handleUserMessage(message, true);
         return res.json({ response });
     }
 
@@ -147,6 +147,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 </div>
             </div>
             <script>
+    // Generate or retrieve a userId from localStorage
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+        userId = crypto.randomUUID();
+        localStorage.setItem('userId', userId);
+    }
+
     function send() {
         const msgInput = document.getElementById('msg');
         const sendBtn = document.querySelector('button');
@@ -169,7 +176,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         fetch('/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: msg })
+            body: JSON.stringify({ message: msg, userId }) // <-- add userId here
         })
         .then(res => res.json())
         .then(data => {
